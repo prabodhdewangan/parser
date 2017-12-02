@@ -1,0 +1,36 @@
+SQL
+---
+
+(1) Write MySQL query to find IPs that mode more than a certain number of requests for a given time period.
+
+    Ex: Write SQL to find IPs that made more than 100 requests starting from 2017-01-01.13:00:00 to 2017-01-01.14:00:00.
+
+Solution :
+
+select IP_ADDRESS, count(IP_ADDRESS) as requestCount from  `JAVA_MYSQL`.`LOG_ENTRY`
+  where  ACCESS_DATE_TIME between "2017-01-01.13:00:00" and "2017-01-01.14:00:00" group by IP_ADDRESS having requestCount > 100
+
+  Output:
+
+  |-----------------|--------------|
+  |IP_ADDRESS       |requestCount  |
+  |-----------------|--------------|
+  |192.168.228.188  |  209         |
+  |192.168.77.101   |  214         |
+  |-----------------|--------------|
+
+(2) Write MySQL query to find requests made by a given IP.
+
+Solution :
+
+select IP_ADDRESS, ACCESS_DATE_TIME, CLIENT_IDENTIFIER from  `JAVA_MYSQL`.`LOG_ENTRY`
+  where  ACCESS_DATE_TIME between "2017-01-01.13:00:00" and "2017-01-01.14:00:00" AND IP_ADDRESS = '192.168.10.135'
+
+  Output:
+
+  |-----------------|--------------------|---------------------------------------------------------------------------------|
+  |IP_ADDRESS       |ACCESS_DATE_TIME    |CLIENT_IDENTIFIER                                                                |
+  |-----------------|--------------------|---------------------------------------------------------------------------------|
+  |192.168.10.135   |2017-01-01 13:08:42 |"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0" |
+  |192.168.10.135   |2017-01-01 13:19:03 |"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0" |
+  |-----------------|--------------------|---------------------------------------------------------------------------------|
